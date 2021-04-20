@@ -9,6 +9,8 @@ export const App = (): JSX.Element => {
   const [incompleteTodoList, setIncompleteTodoList] = useState<string[]>([]);
   const [completeTodoList, setCompleteTodoList] = useState<string[]>([]);
 
+  const isTodoListLimit = () => incompleteTodoList.length >= 5;
+
   const changeTodoTextHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setTodoText(event.target.value);
 
@@ -45,9 +47,13 @@ export const App = (): JSX.Element => {
     <>
       <InputTodo
         todoText={todoText}
+        isTodoListLimit={isTodoListLimit()}
         onChangeTodoText={(event) => changeTodoTextHandler(event)}
         onClickAddBtn={clickAddBtnHandler}
       />
+      {isTodoListLimit() && (
+        <p style={{ color: 'red' }}>登録可能なTODOは5個までです。</p>
+      )}
       <IncompleteTodoList
         todoList={incompleteTodoList}
         onClickCompleteBtn={(index) => clickCompleteBtnHandler(index)}
@@ -55,6 +61,7 @@ export const App = (): JSX.Element => {
       />
       <CompleteTodoList
         todoList={completeTodoList}
+        isTodoListLimit={isTodoListLimit()}
         onClickBackBtn={(index) => clickBackBtnHandler(index)}
       />
     </>

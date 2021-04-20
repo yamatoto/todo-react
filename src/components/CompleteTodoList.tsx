@@ -11,11 +11,12 @@ const style = {
 
 type Props = {
   todoList: string[];
+  isTodoListLimit: boolean;
   onClickBackBtn: (index: number) => void;
 };
 
 export const CompleteTodoList = (props: Props): JSX.Element => {
-  const { todoList, onClickBackBtn } = props;
+  const { todoList, isTodoListLimit, onClickBackBtn } = props;
 
   return (
     <>
@@ -26,7 +27,11 @@ export const CompleteTodoList = (props: Props): JSX.Element => {
             <li key={todo}>
               <div className="list-row">
                 <span>{todo}</span>
-                <button onClick={() => onClickBackBtn(idx)}>戻す</button>
+                <button
+                  onClick={() => onClickBackBtn(idx)}
+                  disabled={isTodoListLimit}>
+                  戻す
+                </button>
               </div>
             </li>
           ))}

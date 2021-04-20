@@ -11,12 +11,13 @@ const style = {
 
 type Props = {
   todoText: string;
+  isTodoListLimit: boolean;
   onChangeTodoText: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClickAddBtn: () => void;
 };
 
 export const InputTodo = (props: Props): JSX.Element => {
-  const { todoText, onChangeTodoText, onClickAddBtn } = props;
+  const { todoText, isTodoListLimit, onChangeTodoText, onClickAddBtn } = props;
 
   return (
     <>
@@ -27,7 +28,9 @@ export const InputTodo = (props: Props): JSX.Element => {
           value={todoText}
           onChange={(event) => onChangeTodoText(event)}
         />
-        <button onClick={onClickAddBtn} disabled={todoText === ''}>
+        <button
+          onClick={onClickAddBtn}
+          disabled={todoText === '' || isTodoListLimit}>
           追加
         </button>
       </div>
