@@ -3,11 +3,8 @@ import './App.css';
 
 export const App = (): JSX.Element => {
   const [inputText, setInputText] = useState('');
-  const [incompleteTodoList, setIncompleteTodoList] = useState([
-    'TODO1',
-    'TODO2',
-  ]);
-  const [completeTodoList, setCompleteTodoList] = useState(['TODO3']);
+  const [incompleteTodoList, setIncompleteTodoList] = useState<string[]>([]);
+  const [completeTodoList, setCompleteTodoList] = useState<string[]>([]);
 
   const changeTodoTextHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputText(event.target.value);
@@ -16,6 +13,12 @@ export const App = (): JSX.Element => {
     if (inputText === '') return;
     setIncompleteTodoList([...incompleteTodoList, inputText]);
     setInputText('');
+  };
+
+  const deleteTodoHandler = (index: number) => {
+    const newIncompleteTodoList = [...incompleteTodoList];
+    newIncompleteTodoList.splice(index, 1);
+    setIncompleteTodoList(newIncompleteTodoList);
   };
 
   return (
@@ -34,12 +37,12 @@ export const App = (): JSX.Element => {
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
         <ul>
-          {incompleteTodoList.map((todo) => (
+          {incompleteTodoList.map((todo, idx) => (
             <li key={todo}>
               <div className="list-row">
                 <span>{todo}</span>
                 <button>完了</button>
-                <button>削除</button>
+                <button onClick={() => deleteTodoHandler(idx)}>削除</button>
               </div>
             </li>
           ))}
