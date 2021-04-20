@@ -15,10 +15,18 @@ export const App = (): JSX.Element => {
     setInputText('');
   };
 
-  const deleteTodoHandler = (index: number) => {
+  const deleteTodoHandler = (index: number) => deleteTodo(index);
+
+  const deleteTodo = (index: number) => {
     const newIncompleteTodoList = [...incompleteTodoList];
     newIncompleteTodoList.splice(index, 1);
     setIncompleteTodoList(newIncompleteTodoList);
+  };
+
+  const completeTodoHandler = (index: number) => {
+    deleteTodo(index);
+    const cmpTodo = incompleteTodoList[index];
+    setCompleteTodoList([...completeTodoList, cmpTodo]);
   };
 
   return (
@@ -41,7 +49,7 @@ export const App = (): JSX.Element => {
             <li key={todo}>
               <div className="list-row">
                 <span>{todo}</span>
-                <button>完了</button>
+                <button onClick={() => completeTodoHandler(idx)}>完了</button>
                 <button onClick={() => deleteTodoHandler(idx)}>削除</button>
               </div>
             </li>
