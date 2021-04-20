@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 export const App = (): JSX.Element => {
+  const [incompleteTodoList, setIncompleteTodoList] = useState([
+    'TODO1',
+    'TODO2',
+  ]);
+  const [completeTodoList, setCompleteTodoList] = useState(['TODO3']);
   return (
     <>
       <div className="input-area">
@@ -11,31 +16,28 @@ export const App = (): JSX.Element => {
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
         <ul>
-          <li>
-            <div className="list-row">
-              <span>TODO1</span>
-              <button>完了</button>
-              <button>削除</button>
-            </div>
-          </li>
-          <li>
-            <div className="list-row">
-              <span>TODO2</span>
-              <button>完了</button>
-              <button>削除</button>
-            </div>
-          </li>
+          {incompleteTodoList.map((todo) => (
+            <li key={todo}>
+              <div className="list-row">
+                <span>{todo}</span>
+                <button>完了</button>
+                <button>削除</button>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="complete-area">
         <p className="title">完了したTODO</p>
         <ul>
-          <li>
-            <div className="list-row">
-              <span>TODO3</span>
-              <button>戻す</button>
-            </div>
-          </li>
+          {completeTodoList.map((todo) => (
+            <li key={todo}>
+              <div className="list-row">
+                <span>{todo}</span>
+                <button>戻す</button>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </>
