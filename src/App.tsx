@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import './App.css';
+import { InputTodo } from './components/InputTodo';
+import { IncompleteTodoList } from './components/IncompleteTodoList';
+import { CompleteTodoList } from './components/CompleteTodoList';
 
 export const App = (): JSX.Element => {
-  const [inputText, setInputText] = useState('');
+  const [todoText, setTodoText] = useState('');
   const [incompleteTodoList, setIncompleteTodoList] = useState<string[]>([]);
   const [completeTodoList, setCompleteTodoList] = useState<string[]>([]);
 
   const changeTodoTextHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setInputText(event.target.value);
+    setTodoText(event.target.value);
 
-  const addTodoHandler = () => {
-    if (inputText === '') return;
-    setIncompleteTodoList([...incompleteTodoList, inputText]);
-    setInputText('');
+  const clickAddBtnHandler = () => {
+    if (todoText === '') return;
+    setIncompleteTodoList([...incompleteTodoList, todoText]);
+    setTodoText('');
   };
 
-  const deleteTodoHandler = (index: number) => deleteTodo(index);
+  const clickDeleteBtnHandler = (index: number) => deleteTodo(index);
 
   const deleteTodo = (index: number) => {
     const newIncompleteTodoList = [...incompleteTodoList];
@@ -23,13 +26,13 @@ export const App = (): JSX.Element => {
     setIncompleteTodoList(newIncompleteTodoList);
   };
 
-  const completeTodoHandler = (index: number) => {
+  const clickCompleteBtnHandler = (index: number) => {
     const cmpTodo = incompleteTodoList[index];
     setCompleteTodoList([...completeTodoList, cmpTodo]);
     deleteTodo(index);
   };
 
-  const backTodoHandler = (index: number) => {
+  const clickBackBtnHandler = (index: number) => {
     const incompleteTodo = completeTodoList[index];
     setIncompleteTodoList([...incompleteTodoList, incompleteTodo]);
 
@@ -40,44 +43,20 @@ export const App = (): JSX.Element => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          type="text"
-          placeholder="TODOを入力"
-          value={inputText}
-          onChange={(event) => changeTodoTextHandler(event)}
-        />
-        <button onClick={addTodoHandler} disabled={inputText === ''}>
-          追加
-        </button>
-      </div>
-      <div className="incomplete-area">
-        <p className="title">未完了のTODO</p>
-        <ul>
-          {incompleteTodoList.map((todo, idx) => (
-            <li key={todo}>
-              <div className="list-row">
-                <span>{todo}</span>
-                <button onClick={() => completeTodoHandler(idx)}>完了</button>
-                <button onClick={() => deleteTodoHandler(idx)}>削除</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="complete-area">
-        <p className="title">完了したTODO</p>
-        <ul>
-          {completeTodoList.map((todo, idx) => (
-            <li key={todo}>
-              <div className="list-row">
-                <span>{todo}</span>
-                <button onClick={() => backTodoHandler(idx)}>戻す</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChangeTodoText={(event) => changeTodoTextHandler(event)}
+        onClickAddBtn={clickAddBtnHandler}
+      />
+      <IncompleteTodoList
+        todoList={incompleteTodoList}
+        onClickCompleteBtn={(index) => clickCompleteBtnHandler(index)}
+        onClickDeleteBtn={(index) => clickDeleteBtnHandler(index)}
+      />
+      <CompleteTodoList
+        todoList={completeTodoList}
+        onClickBackBtn={(index) => clickBackBtnHandler(index)}
+      />
     </>
   );
 };
