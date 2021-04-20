@@ -24,9 +24,18 @@ export const App = (): JSX.Element => {
   };
 
   const completeTodoHandler = (index: number) => {
-    deleteTodo(index);
     const cmpTodo = incompleteTodoList[index];
     setCompleteTodoList([...completeTodoList, cmpTodo]);
+    deleteTodo(index);
+  };
+
+  const backTodoHandler = (index: number) => {
+    const incompleteTodo = completeTodoList[index];
+    setIncompleteTodoList([...incompleteTodoList, incompleteTodo]);
+
+    const newCompleteTodoList = [...completeTodoList];
+    newCompleteTodoList.splice(index, 1);
+    setCompleteTodoList(newCompleteTodoList);
   };
 
   return (
@@ -59,11 +68,11 @@ export const App = (): JSX.Element => {
       <div className="complete-area">
         <p className="title">完了したTODO</p>
         <ul>
-          {completeTodoList.map((todo) => (
+          {completeTodoList.map((todo, idx) => (
             <li key={todo}>
               <div className="list-row">
                 <span>{todo}</span>
-                <button>戻す</button>
+                <button onClick={() => backTodoHandler(idx)}>戻す</button>
               </div>
             </li>
           ))}
