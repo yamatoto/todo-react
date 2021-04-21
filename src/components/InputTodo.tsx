@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 
 const style = {
   backgroundColor: '#c1ffff',
@@ -16,9 +16,7 @@ type Props = {
   onClickAddBtn: () => void;
 };
 
-export const InputTodo = (props: Props): JSX.Element => {
-  const { todoText, isTodoListLimit, onChangeTodoText, onClickAddBtn } = props;
-
+export const InputTodo:FC<Props> = memo(({ todoText, isTodoListLimit, onChangeTodoText, onClickAddBtn }): JSX.Element => {
   return (
     <>
       <div style={style}>
@@ -36,4 +34,6 @@ export const InputTodo = (props: Props): JSX.Element => {
       </div>
     </>
   );
-};
+});
+
+InputTodo.displayName = 'InputTodo';

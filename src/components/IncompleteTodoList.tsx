@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 
 const style = {
   backgroundColor: '#c6ffe2',
@@ -15,9 +15,7 @@ type Props = {
   onClickDeleteBtn: (index: number) => void;
 };
 
-export const IncompleteTodoList = (props: Props): JSX.Element => {
-  const { todoList, onClickCompleteBtn, onClickDeleteBtn } = props;
-
+export const IncompleteTodoList:FC<Props> = memo(({ todoList, onClickCompleteBtn, onClickDeleteBtn }): JSX.Element => {
   return (
     <>
       <div style={style}>
@@ -36,4 +34,6 @@ export const IncompleteTodoList = (props: Props): JSX.Element => {
       </div>
     </>
   );
-};
+});
+
+IncompleteTodoList.displayName = 'IncompleteTodoList';

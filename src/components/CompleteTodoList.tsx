@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 
 const style = {
   backgroundColor: '#ffffe0',
@@ -15,9 +15,7 @@ type Props = {
   onClickBackBtn: (index: number) => void;
 };
 
-export const CompleteTodoList = (props: Props): JSX.Element => {
-  const { todoList, isTodoListLimit, onClickBackBtn } = props;
-
+export const CompleteTodoList:FC<Props> = memo(({ todoList, isTodoListLimit, onClickBackBtn }): JSX.Element => {
   return (
     <>
       <div style={style}>
@@ -39,4 +37,6 @@ export const CompleteTodoList = (props: Props): JSX.Element => {
       </div>
     </>
   );
-};
+});
+
+CompleteTodoList.displayName ="CompleteTodoList";
