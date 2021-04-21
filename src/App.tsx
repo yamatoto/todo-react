@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState,useCallback } from 'react';
 import './App.css';
 import { InputTodo } from './components/InputTodo';
 import { IncompleteTodoList } from './components/IncompleteTodoList';
@@ -11,37 +12,38 @@ export const App = (): JSX.Element => {
 
   const isTodoListLimit = () => incompleteTodoList.length >= 5;
 
-  const changeTodoTextHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setTodoText(event.target.value);
+  const changeTodoTextHandler = useCallback(
+  (event: React.ChangeEvent<HTMLInputElement>) =>
+    setTodoText(event.target.value),[]);
 
-  const clickAddBtnHandler = () => {
+  const clickAddBtnHandler = useCallback(() => {
     if (todoText === '') return;
     setIncompleteTodoList([...incompleteTodoList, todoText]);
     setTodoText('');
-  };
+  },[]);
 
-  const clickDeleteBtnHandler = (index: number) => deleteTodo(index);
+  const clickDeleteBtnHandler = useCallback((index: number) => deleteTodo(index),[]);
 
-  const deleteTodo = (index: number) => {
+  const deleteTodo = useCallback((index: number) => {
     const newIncompleteTodoList = [...incompleteTodoList];
     newIncompleteTodoList.splice(index, 1);
     setIncompleteTodoList(newIncompleteTodoList);
-  };
+  },[]);
 
-  const clickCompleteBtnHandler = (index: number) => {
+  const clickCompleteBtnHandler = useCallback((index: number) => {
     const cmpTodo = incompleteTodoList[index];
     setCompleteTodoList([...completeTodoList, cmpTodo]);
     deleteTodo(index);
-  };
+  },[]);
 
-  const clickBackBtnHandler = (index: number) => {
+  const clickBackBtnHandler = useCallback((index: number) => {
     const incompleteTodo = completeTodoList[index];
     setIncompleteTodoList([...incompleteTodoList, incompleteTodo]);
 
     const newCompleteTodoList = [...completeTodoList];
     newCompleteTodoList.splice(index, 1);
     setCompleteTodoList(newCompleteTodoList);
-  };
+  },[]);
 
   return (
     <>
