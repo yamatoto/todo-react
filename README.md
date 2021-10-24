@@ -1,2 +1,2 @@
-React　学習用  
+React学習用  
 ReactでTODOアプリ
